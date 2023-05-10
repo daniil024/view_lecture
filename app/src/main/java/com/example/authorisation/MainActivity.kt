@@ -3,32 +3,37 @@ package com.example.authorisation
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.TypedValue
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.authorisation.recyclerview.ChatAnimator
+import com.example.authorisation.recyclerview.ChatOffsetDrawer
+import com.example.authorisation.recyclerview.ChatsAdapter
+import com.example.authorisation.recyclerview.data.ChatsPreviewRepository
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var chatsRecyclerView: RecyclerView
+    private val chatsPreviewRepository = ChatsPreviewRepository()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val title: TextView = findViewById(R.id.title)
-        title.text = "Авторизация"
+        chatsRecyclerView = findViewById(R.id.chats)
+        val chatsAdapter = ChatsAdapter()
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        chatsRecyclerView.adapter = chatsAdapter
+        chatsRecyclerView.layoutManager = layoutManager
+        chatsRecyclerView.addItemDecoration(ChatOffsetDrawer(bottomOffset = 16f.toPx.toInt()))
+        chatsAdapter.chats = chatsPreviewRepository.getChats(this)
+        chatsRecyclerView.itemAnimator = ChatAnimator()
 
-//        val rootView = findViewById<FrameLayout>(R.id.root_container)
-//        val layoutParams = FrameLayout.LayoutParams(
-//            ViewGroup.LayoutParams.WRAP_CONTENT,
-//            ViewGroup.LayoutParams.WRAP_CONTENT
-//        ).apply {
-//            marginStart = 26.toPx.toInt()
-//            topMargin = 80.toPx.toInt()
-//        }
-//        val title: TextView = TextView(this)
-//        title.text = "Авторизация"
-//        title.typeface = Typeface.DEFAULT_BOLD
-//        title.textSize = 24f
-//        title.setTextColor(Color.BLACK)
-//        title.layoutParams = layoutParams
-//        rootView.addView(title)
+        val pullToRefresh: SwipeRefreshLayout = findViewById(R.id.pull_to_refresh)
+        pullToRefresh.setOnRefreshListener {
+            chatsAdapter.chats = chatsPreviewRepository.getChats(this)
+            pullToRefresh.isRefreshing = false
+        }
     }
 }
 
