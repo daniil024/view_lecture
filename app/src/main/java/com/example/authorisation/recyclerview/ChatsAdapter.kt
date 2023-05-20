@@ -15,7 +15,10 @@ class ChatsAdapter : RecyclerView.Adapter<ViewHolder>() {
 
     var chats = listOf<Chat>()
         set(value) {
-            val callback = CommonCallbackImpl(oldItems = field, newItems = value)
+            val callback = CommonCallbackImpl(
+                oldItems = field,
+                newItems = value,
+                { oldItem: Chat, newItem -> oldItem.id == newItem.id })
             field = value
             val diffResult = DiffUtil.calculateDiff(callback)
             diffResult.dispatchUpdatesTo(this)
@@ -30,7 +33,7 @@ class ChatsAdapter : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return when(viewType) {
+        return when (viewType) {
             CHAT_PREVIEW_TYPE -> ChatPreviewViewHolder(
                 layoutInflater.inflate(
                     R.layout.chat_preview,
