@@ -4,7 +4,7 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class ChatOffsetDrawer(
+class ChatPreviewOffsetItemDecoration(
     private val leftOffset: Int = 0,
     private val topOffset: Int = 0,
     private val rightOffset: Int = 0,

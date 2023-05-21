@@ -16,14 +16,14 @@ class ChatsPreviewRepository {
             for (i in 0..numberOfChats)
                 add(ChatPreview(i, userPhoto, userName, lastMessage))
 
-            add(VideoChat("Yandex", 563))
+            add(VideoChat(0,"Yandex", 563))
             add(ChatPreview(1, userPhoto, userName, lastMessage))
-            add(VideoChat("Friends", 8))
+            add(VideoChat(0, "Friends", 8))
 
             for (i in 0..2)
                 add(ChatPreview(i, userPhoto, userName, lastMessage))
 
-            add(VideoChat("Family", 4))
+            add(VideoChat(0, "Family", 4))
         }
     }
 }

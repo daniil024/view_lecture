@@ -4,11 +4,12 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.util.TypedValue
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.authorisation.recyclerview.ChatAnimator
-import com.example.authorisation.recyclerview.ChatOffsetDrawer
+import com.example.authorisation.recyclerview.ChatPreviewOffsetItemDecoration
 import com.example.authorisation.recyclerview.ChatsAdapter
 import com.example.authorisation.recyclerview.data.ChatsPreviewRepository
 
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         chatsRecyclerView.adapter = chatsAdapter
         chatsRecyclerView.layoutManager = layoutManager
-        chatsRecyclerView.addItemDecoration(ChatOffsetDrawer(bottomOffset = 16f.toPx.toInt()))
+        chatsRecyclerView.addItemDecoration(ChatPreviewOffsetItemDecoration(bottomOffset = 16f.toPx.toInt()))
         chatsAdapter.chats = chatsPreviewRepository.getChats(this)
         chatsRecyclerView.itemAnimator = ChatAnimator()
 
